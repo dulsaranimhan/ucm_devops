@@ -1,12 +1,23 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../context/authContext";
+import { errorMessage } from "../api/client";
 import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const { login } = useAuth();
 
-  const [email, setEmail] = useState("");
+  // Message shown after registering, or when the session expired
+  const notice = location.state?.registered
+    ? "Account created successfully! Please sign in."
+    : searchParams.get("expired")
+      ? "Your session has expired. Please sign in again."
+      : "";
+
+  const [email, setEmail] = useState(location.state?.email || "");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -26,40 +37,12 @@ function Login() {
     try {
       setLoading(true);
 
-      const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      // Saves the JWT token + user (localStorage if "Remember me", otherwise sessionStorage)
+      await login(email, password, rememberMe);
 
-      console.log(response.data);
-
-      // Save JWT token
-      localStorage.setItem("token", response.data.token);
-
-      // Save user information
-      localStorage.setItem(
-        "user",
-        JSON.stringify(response.data.user)
-      );
-
-      // Optional remember-me behavior
-      if (rememberMe) {
-        localStorage.setItem("rememberMe", "true");
-      } else {
-        localStorage.removeItem("rememberMe");
-      }
-
-      navigate("/dashboard");
+      navigate(location.state?.from || "/dashboard", { replace: true });
     } catch (error) {
-      console.error(error);
-
-      setMessage(
-        error.response?.data?.message ||
-          "Unable to connect to the server."
-      );
+      setMessage(errorMessage(error, "Unable to connect to the server."));
     } finally {
       setLoading(false);
     }
@@ -288,7 +271,7 @@ function Login() {
                   className="forgot-password"
                   onClick={() =>
                     setMessage(
-                      "Password recovery will be available soon."
+                      "Please contact the system administrator to reset your password."
                     )
                   }
                 >
@@ -297,6 +280,13 @@ function Login() {
 
               </div>
 
+
+              {/* SUCCESS / INFO MESSAGE */}
+              {notice && !message && (
+                <div className="login-message success">
+                  {notice}
+                </div>
+              )}
 
               {/* ERROR MESSAGE */}
               {message && (
@@ -369,11 +359,7 @@ function Login() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setMessage(
-                      "Registration page will be available soon."
-                    )
-                  }
+                  onClick={() => navigate("/register")}
                 >
                   Sign up
                 </button>

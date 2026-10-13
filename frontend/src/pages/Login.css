@@ -828,3 +828,71 @@
     font-size: 13px;
   }
 }
+
+/* =========================================
+   ADDITIONS - success message + register page
+========================================= */
+
+.login-message.success {
+  background: #ecfaf6;
+  color: #12715b;
+  border-color: #bfeadc;
+}
+
+.welcome-section.compact {
+  margin-bottom: 26px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.register-form .input-group {
+  margin-bottom: 16px;
+}
+
+.register-form .input-wrapper input,
+.input-wrapper select {
+  height: 50px;
+}
+
+.input-wrapper input.plain {
+  padding: 0 16px;
+}
+
+.input-wrapper select {
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid #d8dde3;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #172033;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.input-wrapper select:focus {
+  border-color: #0b6571;
+  box-shadow: 0 0 0 3px rgba(11, 101, 113, 0.08);
+}
+
+.signup-text a {
+  color: #075c67;
+  font-weight: 700;
+  margin-left: 6px;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
