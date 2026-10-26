@@ -6,7 +6,7 @@ import { Alert, ClubAvatar, EmptyState, Field, PageHeader, StatusBadge, SubmitBu
 import { FACULTIES, formatDate, initials } from "../utils/format";
 
 function Profile() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, accountType } = useAuth();
   const [clubs, setClubs] = useState([]);
 
   const [form, setForm] = useState({
@@ -75,7 +75,7 @@ function Profile() {
           <h2>{user.name}</h2>
           <p className="muted">{user.email}</p>
           <span className={`badge ${user.role === "admin" ? "badge-accent" : "badge-info"}`}>
-            {user.role === "admin" ? "Administrator" : "Student"}
+            {accountType === "club" ? "Club manager" : user.role === "admin" ? "Administrator" : "Student"}
           </span>
           <dl className="profile-facts">
             <div>
@@ -102,7 +102,7 @@ function Profile() {
                     <div className="club-mini-info">
                       <strong>{c.name}</strong>
                     </div>
-                    <StatusBadge status={c.status} role={c.role} />
+                    <StatusBadge status={c.my_status} role={c.my_role} />
                   </Link>
                 </li>
               ))}

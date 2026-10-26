@@ -17,6 +17,7 @@ function Login() {
       ? "Your session has expired. Please sign in again."
       : "";
 
+  const [accountType, setAccountType] = useState("student");
   const [email, setEmail] = useState(location.state?.email || "");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,9 +39,11 @@ function Login() {
       setLoading(true);
 
       // Saves the JWT token + user (localStorage if "Remember me", otherwise sessionStorage)
-      await login(email, password, rememberMe);
-
-      navigate(location.state?.from || "/dashboard", { replace: true });
+      const result = await login(email, password, rememberMe, accountType);
+      const destination = accountType === "club"
+        ? result.managedClubs.length ? `/clubs/${result.managedClubs[0].id}` : "/clubs"
+        : location.state?.from || "/dashboard";
+      navigate(destination, { replace: true });
     } catch (error) {
       setMessage(errorMessage(error, "Unable to connect to the server."));
     } finally {
@@ -111,14 +114,26 @@ function Login() {
 
             <div className="welcome-section">
 
-              <h2>WELCOME BACK!</h2>
+              <h2>{accountType === "club" ? "CLUB SIGN IN" : "WELCOME BACK!"}</h2>
 
               <p>
-                Sign in to continue to your club dashboard.
+                {accountType === "club"
+                  ? "Manage your club, publish events and share announcements."
+                  : "Sign in to discover clubs, join events and manage your account."}
               </p>
 
             </div>
 
+
+            <div className="account-type-picker" role="tablist" aria-label="Sign in as">
+              <button type="button" role="tab" aria-selected={accountType === "student"} className={accountType === "student" ? "active" : ""} onClick={() => { setAccountType("student"); setMessage(""); }}>
+                Student
+              </button>
+              <button type="button" role="tab" aria-selected={accountType === "club"} className={accountType === "club" ? "active" : ""} onClick={() => { setAccountType("club"); setMessage(""); }}>
+                Club
+              </button>
+            </div>
+            {accountType === "club" && <p className="account-type-help">Use your student email and password. You can create your club after signing in.</p>}
 
             <form onSubmit={handleLogin}>
 
@@ -310,7 +325,7 @@ function Login() {
                   </>
                 ) : (
                   <>
-                    Sign in
+                    {accountType === "club" ? "Continue as club" : "Sign in as student"}
                     <span className="arrow">→</span>
                   </>
                 )}

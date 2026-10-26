@@ -15,16 +15,38 @@ function greeting() {
 }
 
 function Dashboard() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, accountType } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
+  const [clubStats, setClubStats] = useState({ members: 0, pending: 0 });
 
   const load = useCallback(() => {
     api
       .get("/dashboard")
-      .then((res) => setData(res.data))
+      .then(async (res) => {
+        setError("");
+        setData(res.data);
+        if (accountType !== "club" || !res.data.my_clubs.length) {
+          setClubStats({ members: 0, pending: 0 });
+          return;
+        }
+
+        const memberLists = await Promise.allSettled(
+          res.data.my_clubs.map((club) => api.get(`/clubs/${club.id}/members`))
+        );
+        const counts = memberLists.reduce(
+          (total, result) => {
+            if (result.status !== "fulfilled") return total;
+            total.members += result.value.data.members.filter((member) => member.status === "approved").length;
+            total.pending += result.value.data.members.filter((member) => member.status === "pending").length;
+            return total;
+          },
+          { members: 0, pending: 0 }
+        );
+        setClubStats(counts);
+      })
       .catch((err) => setError(errorMessage(err)));
-  }, []);
+  }, [accountType]);
 
   useEffect(load, [load]);
 
@@ -34,32 +56,40 @@ function Dashboard() {
 
   const { stats } = data;
   const firstName = user?.name?.split(" ")[0] || "";
+  const isClubAccount = accountType === "club";
 
-  const cards = [
-    { label: "My clubs", value: stats.my_clubs, icon: "clubs", to: "/clubs" },
-    { label: "Events I'm going to", value: stats.my_upcoming_events, icon: "ticket", to: "/events?tab=registered" },
-    { label: "Upcoming events", value: stats.upcoming_events, icon: "calendar", to: "/events" },
-    isAdmin
-      ? { label: "Registered users", value: stats.total_users, icon: "users", to: "/admin" }
-      : { label: "Clubs on campus", value: stats.total_clubs, icon: "shield", to: "/clubs" },
-  ];
+  const cards = isClubAccount
+    ? [
+        { label: "Managed clubs", value: data.my_clubs.length, icon: "clubs", to: "/clubs" },
+        { label: "Club members", value: clubStats.members, icon: "users", to: "/clubs" },
+        { label: "Join requests", value: clubStats.pending, icon: "inbox", to: "/clubs" },
+        { label: "Upcoming events", value: stats.upcoming_events, icon: "calendar", to: "/events" },
+      ]
+    : [
+        { label: "My clubs", value: stats.my_clubs, icon: "clubs", to: "/clubs" },
+        { label: "Events I'm going to", value: stats.my_upcoming_events, icon: "ticket", to: "/events?tab=registered" },
+        { label: "Upcoming events", value: stats.upcoming_events, icon: "calendar", to: "/events" },
+        isAdmin
+          ? { label: "Registered users", value: stats.total_users, icon: "users", to: "/admin" }
+          : { label: "Clubs on campus", value: stats.total_clubs, icon: "shield", to: "/clubs" },
+      ];
 
   return (
     <div className="page">
       <PageHeader
         eyebrow={new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}
         title={`${greeting()}, ${firstName}!`}
-        subtitle="Here's what's happening in your clubs."
+        subtitle={isClubAccount ? "Your club workspace, members and upcoming events." : "Here's what's happening in your clubs."}
         actions={
           <Link to="/clubs" className="btn btn-primary">
-            <Icon name="search" size={18} /> Explore clubs
+            <Icon name={isClubAccount ? "clubs" : "search"} size={18} /> {isClubAccount ? "Manage my clubs" : "Explore clubs"}
           </Link>
         }
       />
 
       <Alert onClose={() => setError("")}>{error}</Alert>
 
-      {stats.pending_requests > 0 && (
+      {!isClubAccount && stats.pending_requests > 0 && (
         <div className="notice-banner">
           <Icon name="inbox" />
           <span>
@@ -86,7 +116,7 @@ function Dashboard() {
       <div className="dashboard-grid">
         <section className="card">
           <div className="card-header">
-            <h2>Upcoming events</h2>
+            <h2>{isClubAccount ? "Your upcoming events" : "Upcoming events"}</h2>
             <Link to="/events" className="link">
               View all
             </Link>
@@ -99,7 +129,7 @@ function Dashboard() {
             </div>
           ) : (
             <EmptyState icon="calendar" title="No upcoming events">
-              Check back soon - clubs post new events regularly.
+              {isClubAccount ? "Create an event from one of your club workspaces." : "Check back soon - clubs post new events regularly."}
             </EmptyState>
           )}
         </section>
@@ -107,9 +137,9 @@ function Dashboard() {
         <div className="dashboard-side">
           <section className="card">
             <div className="card-header">
-              <h2>My clubs</h2>
+              <h2>{isClubAccount ? "Club workspace" : "My clubs"}</h2>
               <Link to="/clubs" className="link">
-                Browse
+                {isClubAccount ? "Manage" : "Browse"}
               </Link>
             </div>
             {data.my_clubs.length ? (
@@ -120,9 +150,7 @@ function Dashboard() {
                       <ClubAvatar name={club.name} logoUrl={club.logo_url} size={40} />
                       <div className="club-mini-info">
                         <strong>{club.name}</strong>
-                        <span>
-                          {club.member_count} member{Number(club.member_count) === 1 ? "" : "s"}
-                        </span>
+                        <span>{isClubAccount ? "Open club workspace" : `${club.member_count} member${Number(club.member_count) === 1 ? "" : "s"}`}</span>
                       </div>
                       <StatusBadge status={club.status} role={club.role} />
                     </Link>
@@ -132,10 +160,10 @@ function Dashboard() {
             ) : (
               <EmptyState
                 icon="clubs"
-                title="You haven't joined any clubs yet"
+                title={isClubAccount ? "No clubs to manage yet" : "You haven't joined any clubs yet"}
                 action={
                   <Link to="/clubs" className="btn btn-primary btn-sm">
-                    Find a club
+                    {isClubAccount ? "Create a club" : "Find a club"}
                   </Link>
                 }
               />
@@ -144,7 +172,7 @@ function Dashboard() {
 
           <section className="card">
             <div className="card-header">
-              <h2>Latest announcements</h2>
+              <h2>{isClubAccount ? "Club announcements" : "Latest announcements"}</h2>
             </div>
             {data.announcements.length ? (
               <ul className="announcement-feed">

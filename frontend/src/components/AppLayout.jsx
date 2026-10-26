@@ -13,7 +13,7 @@ const NAV = [
 ];
 
 export default function AppLayout() {
-  const { user, logout, isAdmin } = useAuth();
+  const { user, logout, isAdmin, accountType } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -22,7 +22,8 @@ export default function AppLayout() {
     navigate("/login");
   };
 
-  const links = isAdmin ? [...NAV, { to: "/admin", label: "Administration", icon: "shield" }] : NAV;
+  const accountLinks = accountType === "club" ? NAV.map((link) => link.to === "/dashboard" ? { ...link, label: "Club overview" } : link.to === "/clubs" ? { ...link, label: "My clubs" } : link) : NAV;
+  const links = isAdmin ? [...accountLinks, { to: "/admin", label: "Administration", icon: "shield" }] : accountLinks;
 
   return (
     <div className="app-shell">
@@ -55,7 +56,7 @@ export default function AppLayout() {
           <div className="avatar">{initials(user?.name)}</div>
           <div className="sidebar-user-info">
             <strong>{user?.name}</strong>
-            <span>{user?.role === "admin" ? "Administrator" : "Student"}</span>
+            <span>{accountType === "club" ? "Club manager" : user?.role === "admin" ? "Administrator" : "Student"}</span>
           </div>
           <button className="icon-button" onClick={handleLogout} title="Log out" aria-label="Log out">
             <Icon name="logout" />

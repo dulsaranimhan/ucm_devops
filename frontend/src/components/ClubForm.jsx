@@ -1,11 +1,13 @@
 import { useState } from "react";
 import api, { errorMessage } from "../api/client";
 import { CLUB_CATEGORIES } from "../utils/format";
+import { useAuth } from "../context/authContext";
 import { Alert, Field, SubmitButton } from "./ui";
 
 // Create (admin) or edit a club.  Pass `club` to edit.
 export default function ClubForm({ club, onSaved, onCancel }) {
   const editing = Boolean(club);
+  const { accountType, isAdmin } = useAuth();
   const [form, setForm] = useState({
     name: club?.name || "",
     description: club?.description || "",
@@ -78,7 +80,7 @@ export default function ClubForm({ club, onSaved, onCancel }) {
         <input value={form.logo_url} onChange={set("logo_url")} placeholder="https://..." />
       </Field>
 
-      {!editing && (
+      {!editing && isAdmin && accountType !== "club" && (
         <Field label="President's email" hint="Optional. Must be a registered user - they become the club president.">
           <input type="email" value={form.president_email} onChange={set("president_email")} placeholder="student@university.lk" />
         </Field>

@@ -21,7 +21,7 @@ import { formatDate, formatDateTime, initials, timeAgo } from "../utils/format";
 function ClubDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, accountType } = useAuth();
 
   const [club, setClub] = useState(null);
   const [events, setEvents] = useState([]);
@@ -127,7 +127,7 @@ function ClubDetails() {
   return (
     <div className="page">
       <Link to="/clubs" className="back-link">
-        <Icon name="arrowLeft" size={16} /> All clubs
+        <Icon name="arrowLeft" size={16} /> {accountType === "club" ? "My clubs" : "All clubs"}
       </Link>
 
       {/* ---------- Club header ---------- */}

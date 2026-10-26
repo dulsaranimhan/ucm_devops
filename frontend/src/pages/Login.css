@@ -896,3 +896,44 @@
     gap: 0;
   }
 }
+
+
+.account-type-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 5px;
+  border: 1px solid rgba(16, 54, 59, 0.12);
+  border-radius: 12px;
+  background: rgba(8, 45, 50, 0.045);
+}
+
+.account-type-picker button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #52666a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-type-picker button.active {
+  background: #fff;
+  color: #07383c;
+  box-shadow: 0 2px 8px rgba(8, 45, 50, 0.12);
+}
+
+.account-type-picker button:focus-visible {
+  outline: 2px solid #0d7d78;
+  outline-offset: 2px;
+}
+
+.account-type-help {
+  margin: -2px 0 14px;
+  color: #637579;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}

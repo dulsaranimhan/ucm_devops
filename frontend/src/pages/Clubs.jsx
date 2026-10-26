@@ -7,7 +7,7 @@ import Icon from "../components/Icon";
 import { Alert, ClubAvatar, EmptyState, Loader, Modal, PageHeader, StatusBadge } from "../components/ui";
 
 function Clubs() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, accountType } = useAuth();
   const navigate = useNavigate();
   const [clubs, setClubs] = useState(null);
   const [search, setSearch] = useState("");
@@ -55,12 +55,14 @@ function Clubs() {
     <div className="page">
       <PageHeader
         eyebrow="Discover"
-        title="Clubs & societies"
-        subtitle={`${clubs.length} clubs to explore. Find your people.`}
+        title={accountType === "club" ? "My clubs" : "Clubs & societies"}
+        subtitle={accountType === "club"
+          ? `${clubs.length} club${clubs.length === 1 ? "" : "s"} in your workspace. Manage members, events and announcements.`
+          : `${clubs.length} clubs to explore. Find your people.`}
         actions={
-          isAdmin && (
+          (isAdmin || accountType === "club") && (
             <button className="btn btn-primary" onClick={() => setShowCreate(true)}>
-              <Icon name="plus" size={18} /> New club
+              <Icon name="plus" size={18} /> {accountType === "club" ? "Create a club" : "New club"}
             </button>
           )
         }
@@ -74,7 +76,7 @@ function Clubs() {
       <div className="toolbar">
         <div className="search-box">
           <Icon name="search" size={18} />
-          <input placeholder="Search clubs..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <input placeholder={accountType === "club" ? "Search my clubs..." : "Search clubs..."} value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <div className="chips">
           {categories.map((c) => (
@@ -85,7 +87,15 @@ function Clubs() {
         </div>
       </div>
 
-      {visible.length === 0 ? (
+      {visible.length === 0 && accountType === "club" && clubs.length === 0 ? (
+        <EmptyState
+          icon="clubs"
+          title="Start your club workspace"
+          action={<button className="btn btn-primary" onClick={() => setShowCreate(true)}>Create a club</button>}
+        >
+          Add your club to manage its events, membership requests and announcements.
+        </EmptyState>
+      ) : visible.length === 0 ? (
         <EmptyState icon="search" title="No clubs found">
           Try a different search or category.
         </EmptyState>
