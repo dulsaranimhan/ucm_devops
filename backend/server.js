@@ -1,28 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-
-// Database connection eka load karaganna
 const db = require('./db');
-
-const app = express();
-
-// Middleware
-app.use(express.json());
-app.use(cors());
-
-// Auth Routes (Register & Login) connect kirima
 const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/apiRoutes');
+const app = express();
+app.use(express.json({ limit: '1mb' }));
+app.use(cors());
+app.get('/', (req, res) => res.send('University Club Management Backend is running...'));
 app.use('/api/auth', authRoutes);
-
-// Test Route ekak
-app.get('/', (req, res) => {
-  res.send('University Club Management Backend is running...');
-});
-
-// Server eka run karana port eka
+app.use('/api', apiRoutes);
+app.use((req,res)=>res.status(404).json({message:'API route not found.'}));
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+db.ready.then(()=>app.listen(PORT,()=>console.log(`Server is running on port ${PORT}`))).catch((err)=>{console.error('Server startup failed:',err.message);process.exitCode=1;});

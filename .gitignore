@@ -1,11 +1,9 @@
-# Dependencies
-node_modules/
-
-# Environment variables
 .env
-
-# Build files
+.env.*
+!.env.example
+.DS_Store
+node_modules/
+**/node_modules/
 dist/
-
-# Logs
+coverage/
 *.log
