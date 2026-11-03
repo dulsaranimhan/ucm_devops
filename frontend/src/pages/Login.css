@@ -22,15 +22,15 @@
   background:
     radial-gradient(
       circle at 20% 20%,
-      rgba(14, 95, 105, 0.35),
+      rgba(55, 110, 230, 0.28),
       transparent 35%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(0, 159, 173, 0.18),
+      rgba(85, 220, 255, 0.13),
       transparent 35%
     ),
-    #071315;
+    #080e1c;
 }
 
 
@@ -46,7 +46,7 @@
 .glow-one {
   width: 400px;
   height: 400px;
-  background: rgba(0, 164, 177, 0.12);
+  background: rgba(75, 141, 255, 0.16);
   top: -150px;
   left: -100px;
 }
@@ -54,7 +54,7 @@
 .glow-two {
   width: 500px;
   height: 500px;
-  background: rgba(11, 74, 82, 0.18);
+  background: rgba(85, 220, 255, 0.1);
   bottom: -250px;
   right: -150px;
 }
@@ -71,7 +71,7 @@
   display: grid;
   grid-template-columns: 1fr 0.92fr;
 
-  background: #ffffff;
+  background: var(--surface);
 
   border-radius: 28px;
 
@@ -100,9 +100,9 @@
   background:
     linear-gradient(
       145deg,
-      #062a30,
-      #071416 55%,
-      #020708
+      #101d36,
+      #0a1221 55%,
+      #070b14
     );
 }
 
@@ -122,8 +122,8 @@
   background:
     linear-gradient(
       180deg,
-      rgba(1, 22, 25, 0.15),
-      rgba(1, 10, 12, 0.88)
+      rgba(7, 12, 24, 0.18),
+      rgba(7, 12, 24, 0.9)
     ),
     url("https://share.google/jsZI8TKw73J5lMLhv");
 
@@ -143,12 +143,12 @@
   background:
     radial-gradient(
       circle at 70% 20%,
-      rgba(0, 196, 207, 0.25),
+      rgba(85, 220, 255, 0.18),
       transparent 30%
     ),
     linear-gradient(
       120deg,
-      rgba(0, 38, 44, 0.65),
+      rgba(12, 28, 54, 0.68),
       transparent 60%
     );
 }
@@ -164,7 +164,7 @@
   width: 500px;
   height: 500px;
 
-  border: 1px solid rgba(81, 220, 229, 0.35);
+  border: 1px solid rgba(85, 220, 255, 0.28);
 
   border-radius: 50%;
 
@@ -219,7 +219,7 @@
   width: 55px;
   height: 3px;
 
-  background: #1ac4d0;
+  background: var(--accent);
 
   margin-top: 18px;
 }
@@ -246,7 +246,7 @@
 }
 
 .visual-message h1 span {
-  color: #20c5d1;
+  color: var(--accent);
 }
 
 .visual-message p {
@@ -265,7 +265,7 @@
   width: 55px;
   height: 3px;
 
-  background: #20c5d1;
+  background: var(--accent);
 
   margin-top: 32px;
 }
@@ -280,7 +280,7 @@
   align-items: center;
   justify-content: center;
 
-  background: #ffffff;
+  background: var(--surface);
 
   padding: 70px 80px;
 }
@@ -300,7 +300,7 @@
 .welcome-section h2 {
   margin: 0;
 
-  color: #101a2a;
+  color: var(--heading);
 
   font-size: 40px;
 
@@ -314,7 +314,7 @@
 .welcome-section p {
   margin: 14px 0 0;
 
-  color: #7c8795;
+  color: var(--muted);
 
   font-size: 16px;
 }
@@ -333,7 +333,7 @@
 
   margin-bottom: 9px;
 
-  color: #283344;
+  color: var(--text);
 
   font-size: 14px;
 
@@ -354,15 +354,15 @@
 
   padding: 0 48px 0 50px;
 
-  border: 1px solid #d8dde3;
+  border: 1px solid var(--border-strong);
 
   border-radius: 9px;
 
   outline: none;
 
-  background: #ffffff;
+  background: var(--surface);
 
-  color: #172033;
+  color: var(--heading);
 
   font-size: 15px;
 
@@ -370,14 +370,14 @@
 }
 
 .input-wrapper input::placeholder {
-  color: #9ca5b0;
+  color: var(--muted);
 }
 
 .input-wrapper input:focus {
-  border-color: #0b6571;
+  border-color: var(--primary);
 
   box-shadow:
-    0 0 0 3px rgba(11, 101, 113, 0.08);
+    0 0 0 3px rgba(75, 141, 255, 0.18);
 }
 
 
@@ -391,7 +391,7 @@
   width: 20px;
   height: 20px;
 
-  color: #7f8a98;
+  color: var(--muted);
 
   pointer-events: none;
 }
@@ -413,7 +413,7 @@
 
   background: transparent;
 
-  color: #8b95a1;
+  color: var(--muted);
 
   cursor: pointer;
 
@@ -445,7 +445,7 @@
   align-items: center;
   gap: 9px;
 
-  color: #536070;
+  color: var(--text);
 
   font-size: 14px;
 
@@ -460,7 +460,7 @@
   width: 17px;
   height: 17px;
 
-  border: 1px solid #c9d0d8;
+  border: 1px solid var(--border-strong);
 
   border-radius: 4px;
 
@@ -468,9 +468,9 @@
 }
 
 .remember input:checked + .custom-checkbox {
-  background: #075c67;
+  background: var(--primary);
 
-  border-color: #075c67;
+  border-color: var(--primary);
 }
 
 .remember input:checked + .custom-checkbox::after {
@@ -491,7 +491,7 @@
 
   background: none;
 
-  color: #075c67;
+  color: var(--primary);
 
   font-size: 14px;
 
@@ -516,11 +516,11 @@
 
   border-radius: 8px;
 
-  background: #fff2f2;
+  background: var(--danger-soft);
 
-  color: #c0392b;
+  color: var(--danger);
 
-  border: 1px solid #ffd5d5;
+  border: 1px solid rgba(255, 133, 133, 0.36);
 
   font-size: 14px;
 }
@@ -539,7 +539,7 @@
 
   border-radius: 9px;
 
-  background: #075c67;
+  background: var(--primary);
 
   color: white;
 
@@ -563,12 +563,12 @@
 }
 
 .login-button:hover {
-  background: #064d57;
+  background: var(--primary-hover);
 
   transform: translateY(-1px);
 
   box-shadow:
-    0 8px 20px rgba(7, 92, 103, 0.22);
+    0 8px 20px rgba(75, 141, 255, 0.28);
 }
 
 .login-button:disabled {
@@ -627,13 +627,13 @@
 
   height: 1px;
 
-  background: #dfe3e7;
+  background: var(--border);
 }
 
 .divider p {
   margin: 0;
 
-  color: #8d96a2;
+  color: var(--muted);
 
   font-size: 13px;
 
@@ -650,13 +650,13 @@
 
   height: 54px;
 
-  border: 1px solid #d6dbe0;
+  border: 1px solid var(--border-strong);
 
   border-radius: 9px;
 
-  background: white;
+  background: var(--surface-raised);
 
-  color: #354052;
+  color: var(--text);
 
   font-size: 15px;
 
@@ -675,9 +675,9 @@
 }
 
 .google-button:hover {
-  background: #f8f9fa;
+  background: var(--surface-raised);
 
-  border-color: #bcc4cc;
+  border-color: var(--border-strong);
 }
 
 .google-icon {
@@ -708,7 +708,7 @@
 
   background: transparent;
 
-  color: #075c67;
+  color: var(--primary);
 
   font-weight: 700;
 
@@ -834,9 +834,9 @@
 ========================================= */
 
 .login-message.success {
-  background: #ecfaf6;
-  color: #12715b;
-  border-color: #bfeadc;
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: rgba(89, 217, 170, 0.34);
 }
 
 .welcome-section.compact {
@@ -865,22 +865,22 @@
 .input-wrapper select {
   width: 100%;
   padding: 0 14px;
-  border: 1px solid #d8dde3;
+  border: 1px solid var(--border-strong);
   border-radius: 9px;
-  background: #ffffff;
-  color: #172033;
+  background: var(--surface);
+  color: var(--heading);
   font-size: 15px;
   font-family: inherit;
   outline: none;
 }
 
 .input-wrapper select:focus {
-  border-color: #0b6571;
-  box-shadow: 0 0 0 3px rgba(11, 101, 113, 0.08);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(75, 141, 255, 0.18);
 }
 
 .signup-text a {
-  color: #075c67;
+  color: var(--primary);
   font-weight: 700;
   margin-left: 6px;
   text-decoration: none;
@@ -906,7 +906,7 @@
   padding: 5px;
   border: 1px solid rgba(16, 54, 59, 0.12);
   border-radius: 12px;
-  background: rgba(8, 45, 50, 0.045);
+  background: var(--surface-raised);
 }
 
 .account-type-picker button {
@@ -914,26 +914,26 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #52666a;
+  color: var(--muted);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
 }
 
 .account-type-picker button.active {
-  background: #fff;
-  color: #07383c;
-  box-shadow: 0 2px 8px rgba(8, 45, 50, 0.12);
+  background: var(--primary);
+  color: #071321;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
 }
 
 .account-type-picker button:focus-visible {
-  outline: 2px solid #0d7d78;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 .account-type-help {
   margin: -2px 0 14px;
-  color: #637579;
+  color: var(--muted);
   font-size: 0.84rem;
   line-height: 1.45;
 }

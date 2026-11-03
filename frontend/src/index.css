@@ -4,30 +4,32 @@
 ========================================= */
 
 :root {
-  --page-bg: #f2f5f6;
-  --surface: #ffffff;
-  --border: #e2e8eb;
-  --border-strong: #d3dbe0;
-  --heading: #101a2a;
-  --text: #2c3a4b;
-  --muted: #6f7b89;
+  color-scheme: dark;
+  --page-bg: #080e1c;
+  --surface: #111a2e;
+  --surface-raised: #17233b;
+  --border: #263550;
+  --border-strong: #344663;
+  --heading: #f2f6ff;
+  --text: #d2dced;
+  --muted: #9aa9c2;
 
-  --primary: #075c67;
-  --primary-hover: #064d57;
-  --primary-soft: #e6f3f4;
-  --accent: #20c5d1;
-  --dark: #062a30;
+  --primary: #2864c8;
+  --primary-hover: #2054aa;
+  --primary-soft: rgba(40, 100, 200, 0.16);
+  --accent: #55dcff;
+  --dark: #0b1426;
 
-  --success: #12715b;
-  --success-soft: #e9f8f2;
-  --warning: #9a6200;
-  --warning-soft: #fff4dc;
-  --danger: #c0392b;
-  --danger-soft: #fff1f0;
+  --success: #59d9aa;
+  --success-soft: rgba(40, 190, 135, 0.14);
+  --warning: #ffd166;
+  --warning-soft: rgba(255, 190, 60, 0.14);
+  --danger: #ff8585;
+  --danger-soft: rgba(235, 80, 95, 0.14);
 
   --radius: 14px;
-  --shadow-sm: 0 1px 2px rgba(16, 26, 42, 0.05);
-  --shadow: 0 10px 30px rgba(16, 26, 42, 0.08);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.18);
+  --shadow: 0 16px 38px rgba(0, 0, 0, 0.3);
 
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 15px;
@@ -174,16 +176,16 @@ textarea {
 
 .btn-primary:hover:not(:disabled) {
   background: var(--primary-hover);
-  box-shadow: 0 6px 16px rgba(7, 92, 103, 0.22);
+  box-shadow: 0 6px 20px rgba(40, 100, 200, 0.28);
 }
 
 .btn-accent {
   background: var(--accent);
-  color: #032a2f;
+  color: #071321;
 }
 
 .btn-accent:hover:not(:disabled) {
-  background: #41d3dd;
+  background: #79e5ff;
 }
 
 .btn-ghost {
@@ -219,13 +221,13 @@ textarea {
 .btn-registered {
   background: var(--success-soft);
   color: var(--success);
-  border-color: #bfeadc;
+  border-color: rgba(89, 217, 170, 0.34);
 }
 
 .btn-registered:hover:not(:disabled) {
   background: var(--danger-soft);
   color: var(--danger);
-  border-color: #ffd5d5;
+  border-color: rgba(255, 133, 133, 0.36);
 }
 
 .icon-button {
@@ -311,13 +313,13 @@ textarea {
 .alert-error {
   background: var(--danger-soft);
   color: var(--danger);
-  border-color: #ffd5d5;
+  border-color: rgba(255, 133, 133, 0.36);
 }
 
 .alert-success {
   background: var(--success-soft);
   color: var(--success);
-  border-color: #bfeadc;
+  border-color: rgba(89, 217, 170, 0.34);
 }
 
 .alert-close {
@@ -366,17 +368,17 @@ textarea {
 }
 
 .badge-accent {
-  background: #dff7f9;
-  color: #05656f;
+  background: rgba(85, 220, 255, 0.14);
+  color: #75e4ff;
 }
 
 .badge-info {
-  background: #eaf0fb;
-  color: #2f5f9e;
+  background: rgba(100, 155, 255, 0.15);
+  color: #a9c7ff;
 }
 
 .badge-muted {
-  background: #eef1f3;
+  background: var(--surface-raised);
   color: var(--muted);
 }
 
@@ -496,7 +498,7 @@ textarea {
 
 .stat-card:hover {
   transform: translateY(-2px);
-  border-color: #bfe3e6;
+  border-color: rgba(85, 220, 255, 0.34);
   box-shadow: var(--shadow);
 }
 
@@ -653,7 +655,7 @@ textarea {
 }
 
 .event-card:hover {
-  border-color: #bfe3e6;
+  border-color: rgba(85, 220, 255, 0.34);
   box-shadow: var(--shadow-sm);
 }
 
@@ -791,7 +793,7 @@ textarea {
 
 .search-box input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(11, 101, 113, 0.08);
+  box-shadow: 0 0 0 3px rgba(40, 100, 200, 0.18);
 }
 
 .chips {
@@ -857,7 +859,7 @@ textarea {
 
 .tabs.inline {
   border-bottom: none;
-  background: #e6ecee;
+  background: var(--surface-raised);
   padding: 4px;
   border-radius: 11px;
 }
@@ -880,7 +882,7 @@ textarea {
   height: 20px;
   padding: 0 6px;
   border-radius: 999px;
-  background: #e8edef;
+  background: var(--border);
   color: var(--muted);
   font-size: 12px;
   display: inline-grid;
@@ -897,7 +899,7 @@ textarea {
   height: 20px;
   padding: 0 6px;
   border-radius: 999px;
-  background: #f0a500;
+  background: #c89224;
   color: #fff;
   font-size: 11px;
   display: inline-grid;
@@ -925,7 +927,7 @@ textarea {
 
 .club-card:hover {
   transform: translateY(-3px);
-  border-color: #bfe3e6;
+  border-color: rgba(85, 220, 255, 0.34);
   box-shadow: var(--shadow);
 }
 
@@ -966,7 +968,7 @@ textarea {
   gap: 10px;
   padding: 14px 22px;
   border-top: 1px solid var(--border);
-  background: #fafbfc;
+  background: var(--surface-raised);
 }
 
 .club-stats {
@@ -1134,8 +1136,8 @@ textarea {
 
 .pending-card {
   margin-bottom: 20px;
-  border-color: #f6dfa8;
-  background: #fffdf6;
+  border-color: rgba(255, 209, 102, 0.38);
+  background: var(--surface-raised);
 }
 
 .member-list li {
@@ -1195,7 +1197,7 @@ textarea {
 }
 
 .danger-zone {
-  border-color: #ffd5d5;
+  border-color: rgba(255, 133, 133, 0.36);
 }
 
 .danger-zone h2 {
@@ -1263,11 +1265,11 @@ textarea {
 .field select:focus,
 .field textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(11, 101, 113, 0.08);
+  box-shadow: 0 0 0 3px rgba(40, 100, 200, 0.18);
 }
 
 .field input:disabled {
-  background: #f4f6f7;
+  background: var(--surface-raised);
   color: var(--muted);
 }
 
@@ -1423,7 +1425,7 @@ textarea {
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--muted);
-  background: #fafbfc;
+  background: var(--surface-raised);
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
@@ -1439,7 +1441,7 @@ textarea {
 }
 
 .table tbody tr:hover {
-  background: #fafcfc;
+  background: rgba(40, 100, 200, 0.06);
 }
 
 .cell-actions {
