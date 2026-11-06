@@ -35,11 +35,20 @@ function CursorEffect() {
       if (frame === null) frame = window.requestAnimationFrame(animateTrail);
       root.classList.add("ucm-cursor-visible");
     };
+    const updateHover = (event) => {
+      const candidate = event.type === "pointerout" ? event.relatedTarget : event.target;
+      const target = candidate instanceof Element ? candidate : null;
+      root.classList.toggle("ucm-cursor-hovering", Boolean(target?.closest("a, button, [role='button']")));
+    };
 
     window.addEventListener("pointermove", moveCursor, { passive: true });
+    document.addEventListener("pointerover", updateHover, true);
+    document.addEventListener("pointerout", updateHover, true);
     return () => {
       window.removeEventListener("pointermove", moveCursor);
-      root.classList.remove("ucm-cursor-active", "ucm-cursor-visible");
+      document.removeEventListener("pointerover", updateHover, true);
+      document.removeEventListener("pointerout", updateHover, true);
+      root.classList.remove("ucm-cursor-active", "ucm-cursor-visible", "ucm-cursor-hovering");
       root.style.removeProperty("--cursor-x");
       root.style.removeProperty("--cursor-y");
       root.style.removeProperty("--cursor-trail-x");
