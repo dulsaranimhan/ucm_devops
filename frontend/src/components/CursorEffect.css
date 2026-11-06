@@ -21,10 +21,25 @@
 }
 
 .ucm-cursor__dot {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 14px rgba(85, 220, 255, 0.75);
+}
+
+.ucm-cursor__trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(85, 220, 255, 0.72);
+  border-radius: 50%;
+  background: rgba(85, 220, 255, 0.08);
+  box-shadow: 0 0 18px rgba(85, 220, 255, 0.2);
+  transform: translate3d(var(--cursor-trail-x, -30px), var(--cursor-trail-y, -30px), 0) translate(-50%, -50%);
 }
