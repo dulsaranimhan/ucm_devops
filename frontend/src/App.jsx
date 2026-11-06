@@ -10,10 +10,12 @@ import ClubDetails from "./pages/ClubDetails";
 import Events from "./pages/Events";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
+import CursorEffect from "./components/CursorEffect";
 
 function App() {
   return (
     <AuthProvider>
+      <CursorEffect />
       <BrowserRouter>
         <Routes>
           {/* Public pages */}
