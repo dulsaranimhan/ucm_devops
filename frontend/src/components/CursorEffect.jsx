@@ -4,7 +4,8 @@ import "./CursorEffect.css";
 function CursorEffect() {
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)");
-    if (!finePointer.matches) return undefined;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!finePointer.matches || reducedMotion.matches) return undefined;
 
     const root = document.documentElement;
     root.classList.add("ucm-cursor-active");

@@ -61,3 +61,12 @@
     box-shadow: 0 0 0 8px rgba(85, 220, 255, 0.22), 0 0 22px rgba(85, 220, 255, 0.9);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .ucm-cursor,
+  .ucm-cursor__trail,
+  .ucm-cursor__dot {
+    transition: none;
+    animation: none;
+  }
+}
