@@ -51,3 +51,13 @@
   border-color: rgba(85, 220, 255, 0.95);
   background: rgba(85, 220, 255, 0.16);
 }
+
+.ucm-cursor-clicking .ucm-cursor__dot {
+  animation: ucm-cursor-click-pulse 280ms ease-out;
+}
+
+@keyframes ucm-cursor-click-pulse {
+  50% {
+    box-shadow: 0 0 0 8px rgba(85, 220, 255, 0.22), 0 0 22px rgba(85, 220, 255, 0.9);
+  }
+}

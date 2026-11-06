@@ -40,15 +40,23 @@ function CursorEffect() {
       const target = candidate instanceof Element ? candidate : null;
       root.classList.toggle("ucm-cursor-hovering", Boolean(target?.closest("a, button, [role='button']")));
     };
+    const startClick = () => root.classList.add("ucm-cursor-clicking");
+    const endClick = () => root.classList.remove("ucm-cursor-clicking");
 
     window.addEventListener("pointermove", moveCursor, { passive: true });
     document.addEventListener("pointerover", updateHover, true);
     document.addEventListener("pointerout", updateHover, true);
+    document.addEventListener("pointerdown", startClick, true);
+    document.addEventListener("pointerup", endClick, true);
+    document.addEventListener("pointercancel", endClick, true);
     return () => {
       window.removeEventListener("pointermove", moveCursor);
       document.removeEventListener("pointerover", updateHover, true);
       document.removeEventListener("pointerout", updateHover, true);
-      root.classList.remove("ucm-cursor-active", "ucm-cursor-visible", "ucm-cursor-hovering");
+      document.removeEventListener("pointerdown", startClick, true);
+      document.removeEventListener("pointerup", endClick, true);
+      document.removeEventListener("pointercancel", endClick, true);
+      root.classList.remove("ucm-cursor-active", "ucm-cursor-visible", "ucm-cursor-hovering", "ucm-cursor-clicking");
       root.style.removeProperty("--cursor-x");
       root.style.removeProperty("--cursor-y");
       root.style.removeProperty("--cursor-trail-x");
